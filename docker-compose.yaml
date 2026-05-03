@@ -21,8 +21,6 @@
 services:
   trunk:
     image: kibble.apps.blindhub.ca/cobdfamily/trunk:${TRUNK_TAG:-latest}
-    # Single-arch fleet — see Microservices/trunk/.github/workflows/release.yml.
-    platform: linux/amd64
     container_name: trunk-data-trunk
     ports:
       - "${TRUNK_HTTP_PORT:-1962}:1962"
@@ -47,7 +45,6 @@ services:
 
   talkshow:
     image: kibble.apps.blindhub.ca/cobdfamily/talkshow:${TALKSHOW_TAG:-latest}
-    platform: linux/amd64
     container_name: trunk-data-talkshow
     ports:
       - "${TALKSHOW_HTTP_PORT:-8001}:8000"
