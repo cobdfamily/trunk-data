@@ -7,7 +7,7 @@
 {% if data.error %}
 <Play>{{ data.base_url }}/audio/invalid-selection.wav</Play>
 {% endif %}
-<Gather action="{{ data.self }}" actionOnEmptyResult="false" method="GET" hints="{% for hint in data.menu.hints %}{{ data.. }}, {% endfor %}" input="dtmf" numDigits="{{ data.menu.numDigits }}" timeout="7">
+<Gather action="{{ data.self }}" actionOnEmptyResult="false" method="GET" hints="{% for hint in data.menu.hints %}{{ hint }}, {% endfor %}" input="dtmf" numDigits="{{ data.menu.numDigits }}" timeout="7">
 {% if data.call.greeting %}
 <Play>{{ data.base_url }}{{ data.menu.greeting }}</Play>
 {% endif %}

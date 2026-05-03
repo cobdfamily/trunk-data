@@ -4,13 +4,13 @@
 {% if data.extension.dial %}
 <Dial timeout="45">
 {% for number in data.extension.dial.numbers %}
-<Sip>callandconfirm344277410761238972546@phone.plivo.com?X-PH-number={{ data.. }}</Sip>
+<Sip>callandconfirm344277410761238972546@phone.plivo.com?X-PH-number={{ number }}</Sip>
 {% endfor %}
 {% for item in data.extension.dial.sip %}
-<Sip>{{ data.. }}</Sip>
+<Sip>{{ item }}</Sip>
 {% endfor %}
 {% for item in data.extension.dial.pbx %}
-<Sip>french-bulldog@campboweninnovations-33be1347ee70.sip.signalwire.com?x-extension={{ data.. }}&amp;x-bh-did={{ data.call.To }}</Sip>
+<Sip>french-bulldog@campboweninnovations-33be1347ee70.sip.signalwire.com?x-extension={{ item }}&amp;x-bh-did={{ data.call.To }}</Sip>
 {% endfor %}
 </Dial>
 {% endif %}
