@@ -1,0 +1,5 @@
+prompt: /audio/team.wav
+numDigits: 3
+options:
+  '9': /menus/mainmenu
+  '0': /extensions/100

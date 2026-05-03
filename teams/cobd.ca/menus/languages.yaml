@@ -1,0 +1,7 @@
+prompt: /audio/cobd-greeting.wav
+numDigits: 3
+options:
+  '1': /menus/mainmenu
+  '2': /documents/support-french
+  '0': /extensions/100
+  '3': /extensions/052

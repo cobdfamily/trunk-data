@@ -1,0 +1,9 @@
+prompt: /audio/other-programs-and-services.wav
+numDigits: 3
+options:
+  '1': /menus/bowen-island-community-services
+  '2': /menus/education?greeting=true
+  '3': /documents/roundtable
+  '4': /extensions/100
+  '9': /menus/mainmenu
+  '0': /extensions/100
