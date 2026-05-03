@@ -1,0 +1,15 @@
+{
+"prompt": "/audio/mainmenu.wav",
+"numDigits": 3,
+"options": {
+	"1": "/menus/camps",
+"2": "/menus/training",
+	"3": "/menus/blindhub",
+"4": "/menus/other-programs-and-services",
+"5": "/extensions/100",
+"6": "/extensions/100",
+"8": "/documents/roundtable",
+"9": "/menus/team",
+	"0": "/extensions/100"
+}
+}

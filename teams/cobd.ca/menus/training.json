@@ -1,0 +1,9 @@
+{
+"prompt": "/audio/training.wav",
+"numDigits": 3,
+"options": {
+"1": "/extensions/100",
+"9": "/menus/mainmenu",
+	"0": "/extensions/100"
+}
+}
