@@ -1,0 +1,70 @@
+# End-to-end test stack for the trunk-data tree.
+#
+# Brings up the cobdfamily/trunk image with this repo bind-mounted
+# as its app_data root, plus a cobdfamily/talkshow alongside it.
+# The tests in tests/test_e2e.py walk the menu / extension /
+# audio paths through trunk to lock the rendered TwiML against
+# the live data tree.
+#
+# trunk-data references no publications and so does not call
+# talkshow during the menu / extension flow that the current
+# tests exercise. talkshow is included anyway so the stack
+# matches the production deploy shape and so a future test can
+# exercise the publication flow without changing compose.
+#
+# Run locally:
+#   docker compose up -d
+#   pip install -r tests/requirements.txt
+#   python3 -m pytest tests/test_e2e.py -v
+#   docker compose down -v
+
+services:
+  trunk:
+    image: kibble.apps.blindhub.ca/cobdfamily/trunk:${TRUNK_TAG:-latest}
+    # Single-arch fleet — see Microservices/trunk/.github/workflows/release.yml.
+    platform: linux/amd64
+    container_name: trunk-data-trunk
+    ports:
+      - "${TRUNK_HTTP_PORT:-1962}:1962"
+    environment:
+      TRUNK_CONFIG: /app/config.yaml
+    volumes:
+      # The repo root is the app_data tree. Read-only — trunk
+      # never writes here.
+      - ./:/app/data:ro
+      - ./tests/trunk-config.yaml:/app/config.yaml:ro
+    healthcheck:
+      test:
+        - "CMD"
+        - "python"
+        - "-c"
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:1962/', timeout=2).status==200 else 1)"
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+    restart: unless-stopped
+
+  talkshow:
+    image: kibble.apps.blindhub.ca/cobdfamily/talkshow:${TALKSHOW_TAG:-latest}
+    platform: linux/amd64
+    container_name: trunk-data-talkshow
+    ports:
+      - "${TALKSHOW_HTTP_PORT:-8001}:8000"
+    environment:
+      # Stub Azure creds — the / liveness probe is all we exercise
+      # in CI, and that doesn't hit the synthesis path. A real
+      # publication-flow test would override these with live keys.
+      MSTTS_SUBSCRIPTION_KEY: "${MSTTS_SUBSCRIPTION_KEY:-stub}"
+      MSTTS_REGION: "${MSTTS_REGION:-eastus}"
+    healthcheck:
+      test:
+        - "CMD"
+        - "python"
+        - "-c"
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/', timeout=2).status==200 else 1)"
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+    restart: unless-stopped

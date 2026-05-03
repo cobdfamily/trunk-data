@@ -1,0 +1,24 @@
+# Test config for the trunk-data E2E suite.
+#
+# Points trunk at the bind-mounted data tree (which is the repo
+# root) and disables the request-log middleware so test output
+# stays readable.
+
+server:
+  host: 0.0.0.0
+  port: 1962
+
+# Set by docker-compose to /app/data (the repo root mount).
+app_data: /app/data
+
+# Empty -> trunk falls through to the request's own scheme + host
+# when rendering URLs. Tests fix the host via X-Forwarded-Host so
+# they don't need to know the runner's network shape.
+public_base_url: ""
+
+voicemail:
+  postmark_token: ""
+
+logging:
+  json_format: false
+  request_log: false

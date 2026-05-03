@@ -13,3 +13,9 @@
 # even if a legacy container is still running somewhere.
 phoned.log
 *.log
+
+# Test harness artifacts
+tests/.venv/
+tests/.pytest_cache/
+.pytest_cache/
+__pycache__/
